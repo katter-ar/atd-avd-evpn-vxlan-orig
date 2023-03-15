@@ -10,4 +10,5 @@
       vars:
         container_root: 'dc2_fabric'
         state: present
+        cv_collection: v3
         execute_tasks: true
