@@ -1,0 +1,163 @@
+router_bgp:
+  as: '65000'
+  router_id: 10.1.0.10
+  bgp_defaults:
+  - no bgp default ipv4-unicast
+  - distance bgp 20 200 200
+  - neighbor default send-community
+  - graceful-restart restart-time 300
+  - graceful-restart
+  - maximum-paths 4 ecmp 4
+  peer_groups:
+    IPV4-UNDERLAY-PEERS:
+      type: ipv4
+      password: X/OrLne2MxtUwJOXyoEcEw==
+      maximum_routes: 12000
+      send_community: all
+    EVPN-OVERLAY-LOCAL-PEERS:
+      type: evpn
+      update_source: Loopback0
+      bfd: true
+      password: HwsUtvRBaFIOmUOBhrtIfQ==
+      send_community: all
+      maximum_routes: 0
+      ebgp_multihop: 3
+      next_hop_unchanged: true
+  address_family_ipv4:
+    peer_groups:
+      IPV4-UNDERLAY-PEERS:
+        activate: true
+      EVPN-OVERLAY-LOCAL-PEERS:
+        activate: false
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
+  neighbors:
+    10.255.0.53:
+      peer_group: IPV4-UNDERLAY-PEERS
+      remote_as: '65001'
+      description: s1-leaf1_Ethernet2
+    10.255.0.61:
+      peer_group: IPV4-UNDERLAY-PEERS
+      remote_as: '65001'
+      description: s1-leaf2_Ethernet2
+    10.255.0.5:
+      peer_group: IPV4-UNDERLAY-PEERS
+      remote_as: '65099'
+      description: s1-brdr1_Ethernet2
+    10.255.0.13:
+      peer_group: IPV4-UNDERLAY-PEERS
+      remote_as: '65099'
+      description: s1-brdr2_Ethernet2
+    10.1.0.2:
+      peer_group: EVPN-OVERLAY-LOCAL-PEERS
+      description: s1-brdr1
+      remote_as: '65099'
+    10.1.0.4:
+      peer_group: EVPN-OVERLAY-LOCAL-PEERS
+      description: s1-brdr2
+      remote_as: '65099'
+    10.1.0.14:
+      peer_group: EVPN-OVERLAY-LOCAL-PEERS
+      description: s1-leaf1
+      remote_as: '65001'
+    10.1.0.16:
+      peer_group: EVPN-OVERLAY-LOCAL-PEERS
+      description: s1-leaf2
+      remote_as: '65001'
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-LOCAL-PEERS:
+        activate: true
+static_routes:
+- vrf: default
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 192.168.0.1
+service_routing_protocols_model: multi-agent
+ip_routing: true
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+spanning_tree:
+  mode: none
+local_users:
+  arista:
+    privilege: 15
+    role: network-admin
+    sha512_password: $6$65534$Xj7Qds8fWSiFkllwXUvPx7nNc79Gc6/t1ESOFFnNgYRyWeauJew48mg2oOWkaG1w6MCLu79dSUGFa0fwkYOXW/
+vrfs:
+  default:
+    ip_routing: false
+management_interfaces:
+  Management0:
+    description: oob_management
+    shutdown: false
+    vrf: default
+    ip_address: 192.168.0.10/24
+    gateway: 192.168.0.1
+    type: oob
+management_api_http:
+  enable_vrfs:
+    default: {}
+  enable_https: true
+ethernet_interfaces:
+  Ethernet2:
+    peer: s1-leaf1
+    peer_interface: Ethernet2
+    peer_type: l3leaf
+    description: P2P_LINK_TO_S1-LEAF1_Ethernet2
+    shutdown: false
+    mtu: 9214
+    type: routed
+    ip_address: 10.255.0.52/31
+  Ethernet3:
+    peer: s1-leaf2
+    peer_interface: Ethernet2
+    peer_type: l3leaf
+    description: P2P_LINK_TO_S1-LEAF2_Ethernet2
+    shutdown: false
+    mtu: 9214
+    type: routed
+    ip_address: 10.255.0.60/31
+  Ethernet7:
+    peer: s1-brdr1
+    peer_interface: Ethernet2
+    peer_type: l3leaf
+    description: P2P_LINK_TO_S1-BRDR1_Ethernet2
+    shutdown: false
+    mtu: 9214
+    type: routed
+    ip_address: 10.255.0.4/31
+  Ethernet8:
+    peer: s1-brdr2
+    peer_interface: Ethernet2
+    peer_type: l3leaf
+    description: P2P_LINK_TO_S1-BRDR2_Ethernet2
+    shutdown: false
+    mtu: 9214
+    type: routed
+    ip_address: 10.255.0.12/31
+loopback_interfaces:
+  Loopback0:
+    description: EVPN_Overlay_Peering
+    shutdown: false
+    ip_address: 10.1.0.10/32
+prefix_lists:
+  PL-LOOPBACKS-EVPN-OVERLAY:
+    sequence_numbers:
+      10:
+        action: permit 10.1.0.0/24 eq 32
+route_maps:
+  RM-CONN-2-BGP:
+    sequence_numbers:
+      10:
+        type: permit
+        match:
+        - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+router_bfd:
+  multihop:
+    interval: 300
+    min_rx: 300
+    multiplier: 3

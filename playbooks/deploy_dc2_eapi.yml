@@ -1,7 +1,6 @@
 ---
 - name: Deploy DC2 Configurations via EAPI
   hosts: dc2_fabric
-  gather_facts: false
   tasks:
 
     - name: Import Global Vars

@@ -2,7 +2,6 @@
 - name: Deploying DC2 Changes via CVP
   hosts: cvp
   connection: local
-  gather_facts: false
   tasks:
     - name: run CVP provisioning
       import_role:
