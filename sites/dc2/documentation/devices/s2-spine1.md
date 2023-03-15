@@ -202,8 +202,6 @@ vlan internal order ascending range 1006 1199
 | --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
 | Ethernet2 | P2P_LINK_TO_S2-LEAF1_Ethernet2 | routed | - | 10.255.1.196/31 | default | 9214 | False | - | - |
 | Ethernet3 | P2P_LINK_TO_S2-LEAF2_Ethernet2 | routed | - | 10.255.1.204/31 | default | 9214 | False | - | - |
-| Ethernet4 | P2P_LINK_TO_S2-LEAF3_Ethernet2 | routed | - | 10.255.1.212/31 | default | 9214 | False | - | - |
-| Ethernet5 | P2P_LINK_TO_S2-LEAF4_Ethernet2 | routed | - | 10.255.1.220/31 | default | 9214 | False | - | - |
 | Ethernet7 | P2P_LINK_TO_S2-BRDR1_Ethernet2 | routed | - | 10.255.1.148/31 | default | 9214 | False | - | - |
 | Ethernet8 | P2P_LINK_TO_S2-BRDR2_Ethernet2 | routed | - | 10.255.1.156/31 | default | 9214 | False | - | - |
 
@@ -224,20 +222,6 @@ interface Ethernet3
    mtu 9214
    no switchport
    ip address 10.255.1.204/31
-!
-interface Ethernet4
-   description P2P_LINK_TO_S2-LEAF3_Ethernet2
-   no shutdown
-   mtu 9214
-   no switchport
-   ip address 10.255.1.212/31
-!
-interface Ethernet5
-   description P2P_LINK_TO_S2-LEAF4_Ethernet2
-   no shutdown
-   mtu 9214
-   no switchport
-   ip address 10.255.1.220/31
 !
 interface Ethernet7
    description P2P_LINK_TO_S2-BRDR1_Ethernet2
@@ -377,14 +361,10 @@ ip route 0.0.0.0/0 192.168.0.1
 | 10.1.0.104 | 65199 | default | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | - |
 | 10.1.0.114 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | - |
 | 10.1.0.116 | 65101 | default | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | - |
-| 10.1.0.118 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | - |
-| 10.1.0.120 | 65102 | default | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | Inherited from peer group EVPN-OVERLAY-LOCAL-PEERS | - | - |
 | 10.255.1.149 | 65199 | default | - | Inherited from peer group IPV4-UNDERLAY-PEERS | Inherited from peer group IPV4-UNDERLAY-PEERS | - | - | - | - |
 | 10.255.1.157 | 65199 | default | - | Inherited from peer group IPV4-UNDERLAY-PEERS | Inherited from peer group IPV4-UNDERLAY-PEERS | - | - | - | - |
 | 10.255.1.197 | 65101 | default | - | Inherited from peer group IPV4-UNDERLAY-PEERS | Inherited from peer group IPV4-UNDERLAY-PEERS | - | - | - | - |
 | 10.255.1.205 | 65101 | default | - | Inherited from peer group IPV4-UNDERLAY-PEERS | Inherited from peer group IPV4-UNDERLAY-PEERS | - | - | - | - |
-| 10.255.1.213 | 65102 | default | - | Inherited from peer group IPV4-UNDERLAY-PEERS | Inherited from peer group IPV4-UNDERLAY-PEERS | - | - | - | - |
-| 10.255.1.221 | 65102 | default | - | Inherited from peer group IPV4-UNDERLAY-PEERS | Inherited from peer group IPV4-UNDERLAY-PEERS | - | - | - | - |
 
 ### Router BGP EVPN Address Family
 
@@ -430,12 +410,6 @@ router bgp 65100
    neighbor 10.1.0.116 peer group EVPN-OVERLAY-LOCAL-PEERS
    neighbor 10.1.0.116 remote-as 65101
    neighbor 10.1.0.116 description s2-leaf2
-   neighbor 10.1.0.118 peer group EVPN-OVERLAY-LOCAL-PEERS
-   neighbor 10.1.0.118 remote-as 65102
-   neighbor 10.1.0.118 description s2-leaf3
-   neighbor 10.1.0.120 peer group EVPN-OVERLAY-LOCAL-PEERS
-   neighbor 10.1.0.120 remote-as 65102
-   neighbor 10.1.0.120 description s2-leaf4
    neighbor 10.255.1.149 peer group IPV4-UNDERLAY-PEERS
    neighbor 10.255.1.149 remote-as 65199
    neighbor 10.255.1.149 description s2-brdr1_Ethernet2
@@ -448,12 +422,6 @@ router bgp 65100
    neighbor 10.255.1.205 peer group IPV4-UNDERLAY-PEERS
    neighbor 10.255.1.205 remote-as 65101
    neighbor 10.255.1.205 description s2-leaf2_Ethernet2
-   neighbor 10.255.1.213 peer group IPV4-UNDERLAY-PEERS
-   neighbor 10.255.1.213 remote-as 65102
-   neighbor 10.255.1.213 description s2-leaf3_Ethernet2
-   neighbor 10.255.1.221 peer group IPV4-UNDERLAY-PEERS
-   neighbor 10.255.1.221 remote-as 65102
-   neighbor 10.255.1.221 description s2-leaf4_Ethernet2
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn

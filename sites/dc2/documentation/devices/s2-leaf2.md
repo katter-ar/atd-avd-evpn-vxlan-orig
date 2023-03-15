@@ -239,7 +239,6 @@ vlan internal order ascending range 1006 1199
 | ------- | ---- | ------------ |
 | 10 | ten | - |
 | 20 | twenty | - |
-| 112 | onetwelve | - |
 | 4001 | MLAG_iBGP_A | LEAF_PEER_L3 |
 | 4093 | LEAF_PEER_L3 | LEAF_PEER_L3 |
 | 4094 | MLAG_PEER | MLAG |
@@ -253,9 +252,6 @@ vlan 10
 !
 vlan 20
    name twenty
-!
-vlan 112
-   name onetwelve
 !
 vlan 4001
    name MLAG_iBGP_A
@@ -281,7 +277,6 @@ vlan 4094
 | Interface | Description | Mode | VLANs | Native VLAN | Trunk Group | Channel-Group |
 | --------- | ----------- | ---- | ----- | ----------- | ----------- | ------------- |
 | Ethernet1 | MLAG_PEER_s2-leaf1_Ethernet1 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
-| Ethernet4 | HOSTA_Eth2 | *access | *112 | *- | *- | 4 |
 | Ethernet6 | MLAG_PEER_s2-leaf1_Ethernet6 | *trunk | *2-4094 | *- | *['LEAF_PEER_L3', 'MLAG'] | 1000 |
 
 *Inherited from Port-Channel Interface
@@ -316,11 +311,6 @@ interface Ethernet3
    no switchport
    ip address 10.255.1.207/31
 !
-interface Ethernet4
-   description HOSTA_Eth2
-   no shutdown
-   channel-group 4 mode active
-!
 interface Ethernet6
    description MLAG_PEER_s2-leaf1_Ethernet6
    no shutdown
@@ -335,19 +325,11 @@ interface Ethernet6
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel4 | HOSTA | switched | access | 112 | - | - | - | - | 4 | - |
 | Port-Channel1000 | MLAG_PEER_s2-leaf1_Po1000 | switched | trunk | 2-4094 | - | ['LEAF_PEER_L3', 'MLAG'] | - | - | - | - |
 
 ### Port-Channel Interfaces Device Configuration
 
 ```eos
-!
-interface Port-Channel4
-   description HOSTA
-   no shutdown
-   switchport
-   switchport access vlan 112
-   mlag 4
 !
 interface Port-Channel1000
    description MLAG_PEER_s2-leaf1_Po1000
@@ -401,7 +383,6 @@ interface Loopback1
 | --------- | ----------- | --- | ---- | -------- |
 | Vlan10 | ten | A | 9014 | False |
 | Vlan20 | twenty | A | 9014 | False |
-| Vlan112 | onetwelve | A | 9014 | False |
 | Vlan4001 | MLAG_PEER_L3_iBGP: vrf A | A | 9214 | False |
 | Vlan4093 | MLAG_PEER_L3_PEERING | default | 9214 | False |
 | Vlan4094 | MLAG_PEER | default | 9214 | False |
@@ -412,7 +393,6 @@ interface Loopback1
 | --------- | --- | ---------- | ------------------ | ------------------------- | ---- | ------ | ------- |
 | Vlan10 |  A  |  -  |  10.10.10.1/24  |  -  |  -  |  -  |  -  |
 | Vlan20 |  A  |  -  |  10.20.20.1/24  |  -  |  -  |  -  |  -  |
-| Vlan112 |  A  |  -  |  10.111.112.1/24  |  -  |  -  |  -  |  -  |
 | Vlan4001 |  A  |  192.2.2.227/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4093 |  default  |  192.1.1.227/31  |  -  |  -  |  -  |  -  |  -  |
 | Vlan4094 |  default  |  192.0.0.227/31  |  -  |  -  |  -  |  -  |  -  |
@@ -434,13 +414,6 @@ interface Vlan20
    mtu 9014
    vrf A
    ip address virtual 10.20.20.1/24
-!
-interface Vlan112
-   description onetwelve
-   no shutdown
-   mtu 9014
-   vrf A
-   ip address virtual 10.111.112.1/24
 !
 interface Vlan4001
    description MLAG_PEER_L3_iBGP: vrf A
@@ -479,7 +452,6 @@ interface Vlan4094
 | ---- | --- | ---------- | --------------- |
 | 10 | 10010 | - | - |
 | 20 | 10020 | - | - |
-| 112 | 10112 | - | - |
 
 #### VRF to VNI and Multicast Group Mappings
 
@@ -498,7 +470,6 @@ interface Vxlan1
    vxlan udp-port 4789
    vxlan vlan 10 vni 10010
    vxlan vlan 20 vni 10020
-   vxlan vlan 112 vni 10112
    vxlan vrf A vni 50001
 ```
 
@@ -642,7 +613,6 @@ ip route 0.0.0.0/0 192.168.0.1
 | ---- | ------------------- | ----------------- | ------------------- | ------------------- | ------------ |
 | 10 | 10.1.0.116:10010 | 10010:10010 | - | - | learned |
 | 20 | 10.1.0.116:10020 | 10020:10020 | - | - | learned |
-| 112 | 10.1.0.116:10112 | 10112:10112 | - | - | learned |
 
 ### Router BGP VRFs
 
@@ -700,11 +670,6 @@ router bgp 65101
    vlan 10
       rd 10.1.0.116:10010
       route-target both 10010:10010
-      redistribute learned
-   !
-   vlan 112
-      rd 10.1.0.116:10112
-      route-target both 10112:10112
       redistribute learned
    !
    vlan 20

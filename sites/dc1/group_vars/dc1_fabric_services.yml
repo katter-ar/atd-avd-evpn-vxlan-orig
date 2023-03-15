@@ -27,11 +27,3 @@ tenants:
             mtu: 9014
             ip_address_virtual: 10.20.20.1/24
             evpn_l2_multi_domain: true
-          112:
-            name: onetwelve
-            description: onetwelve
-            tags: ['DC']
-            enabled: true
-            mtu: 9014
-            ip_address_virtual: 10.111.112.1/24
-            evpn_l2_multi_domain: true

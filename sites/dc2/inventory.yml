@@ -14,8 +14,6 @@ dc2:
           hosts:
             s2-leaf1:
             s2-leaf2:
-            s2-leaf3:
-            s2-leaf4:
             s2-brdr1:
             s2-brdr2:
     dc2_fabric_services:

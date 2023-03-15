@@ -16,14 +16,6 @@ CVP_DEVICES:
     parentContainerName: dc2_leafs
     configlets:
       - AVD-dc2_fabric-_s2-leaf2
-  - fqdn: s2-leaf3
-    parentContainerName: dc2_leafs
-    configlets:
-      - AVD-dc2_fabric-_s2-leaf3
-  - fqdn: s2-leaf4
-    parentContainerName: dc2_leafs
-    configlets:
-      - AVD-dc2_fabric-_s2-leaf4
   - fqdn: s2-spine1
     parentContainerName: dc2_spines
     configlets:
