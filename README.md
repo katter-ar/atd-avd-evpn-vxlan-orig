@@ -61,22 +61,17 @@ From your ATD environment, launch the programmability IDE, enter the password, a
 
 ![IDE](images/programmability_ide.png)
 
-
 ## STEP #1 - Clone Necessary Repos
 
-- Change working directory. The following commands will be executed from here.
+Change working directory and clone repository by issuing the following commands.
 
 ``` bash
-cd labfiles
-```
-
-- Clone the POC Repo
-
-``` bash
+cd /home/coder/project/labfiles
 git clone https://github.com/katter-ar/atd-avd-evpn-vxlan.git
+cd atd-avd-evpn-vxlan
 ```
 
-- Install the AVD collection
+## STEP #2 - Install the AVD collection
 
 ``` bash
 ansible-galaxy collection install arista.avd arista.cvp --force
@@ -85,43 +80,11 @@ pip3 config set global.disable-pip-version-check true
 pip3 install -r ${ARISTA_AVD_DIR}/arista/avd/requirements.txt
 ```
 
-- At this point you should see the `atd-avd-evpn-vxlan` directory under the labfiles directory.
+## STEP #3 - Update Password in global_vars
 
-## STEP #2 - Update Passwords and SSH Keys
-
-The ATD Lab switches are preconfigured with MD5 encrypted passwords.  AVD uses sha512 passwords so we need to convert the current MD5 password to sha512.  **You will need to login to any switch in the topology to complete this step.**  
-
-From the Programmibility IDE Explorer:
-
-- Navigate to the `labfiles/atd-avd-evpn-vxlan/sites/dc1/group_vars` directory.
-- Double click on the **dc1.yml** file to open an editor tab.
-- Update line 6.  **Follow** instructions per line below.
-
-### Update Line 6
-
-- Update `ansible_password` key (line 4) with your unique lab password found on the **Usernames and Passwords** section of your lab topology screen.
-
-``` yaml
-# sites/dc1/group_vars/dc1.yml
-#
-# Update password with lab credentials
-ansible_password: ######### 
-```
-- Repeat the above steps for the **dc2.yml** file, in the `sites/dc2/group_vars` directory.
-
-<br>
-<br>
-
-## Change directory to the actual repo
-``` bash
-cd atd-avd-evpn-vxlan
-```
-<br>
-<br>
+Update ansible_password: in global_vars/global_dc_vars.yml (line 5).
 
 ## Building/Deploying Configurations & Labs Info
-
-<br>
 
 This AVD topology includes two labs, with tasks that show Day 2 operations using AVD on an EVPN VXLAN fabric.  These labs are located in the **lab guide** directory, in the file `evpn-vxlan-labs.md`.  You can view these labs in the easily readable MarkDown format within the IDE by right clicking the lab file, and clicking **Open Preview**.  You can also view them natively in github.
 
