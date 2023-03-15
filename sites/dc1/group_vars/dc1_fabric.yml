@@ -1,5 +1,6 @@
 ---
 # DC1 fabric vars
+fabric_name: dc1_fabric
 
 underlay_routing_protocol: EBGP
 overlay_routing_protocol: EBGP
