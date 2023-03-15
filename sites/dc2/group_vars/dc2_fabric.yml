@@ -153,6 +153,20 @@ l3leaf:
           id: 116
           mgmt_ip: 192.168.0.23/24
           uplink_switch_interfaces: [Ethernet3, Ethernet3]
+    - group: LeafPair2
+      filter:
+        tenants: [ATD_DC]
+        tags: ['DC']
+      bgp_as: 65102
+      nodes:
+        - name: s2-leaf3
+          id: 118
+          mgmt_ip: 192.168.0.24/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+        - name: s2-leaf4
+          id: 120
+          mgmt_ip: 192.168.0.25/24
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
 
 ####################################################
 # External Fabric PtP L3 Conncectivity             #

@@ -101,6 +101,14 @@ router_bgp:
         - 10020:10020
       redistribute_routes:
       - learned
+    112:
+      tenant: ATD_DC
+      rd: 10.1.0.116:10112
+      route_targets:
+        both:
+        - 10112:10112
+      redistribute_routes:
+      - learned
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0
@@ -160,6 +168,9 @@ vlans:
   20:
     tenant: ATD_DC
     name: twenty
+  112:
+    tenant: ATD_DC
+    name: onetwelve
   4001:
     tenant: ATD_DC
     name: MLAG_iBGP_A
@@ -195,6 +206,15 @@ vlan_interfaces:
     mtu: 9014
     ip_address_virtual: 10.20.20.1/24
     vrf: A
+  Vlan112:
+    tenant: ATD_DC
+    tags:
+    - DC
+    description: onetwelve
+    shutdown: false
+    mtu: 9014
+    ip_address_virtual: 10.111.112.1/24
+    vrf: A
   Vlan4001:
     tenant: ATD_DC
     type: underlay_peering
@@ -213,6 +233,13 @@ port_channel_interfaces:
     trunk_groups:
     - LEAF_PEER_L3
     - MLAG
+  Port-Channel4:
+    description: HOSTA
+    type: switched
+    shutdown: false
+    mode: access
+    vlans: '112'
+    mlag: 4
 ethernet_interfaces:
   Ethernet1:
     peer: s2-leaf1
@@ -252,6 +279,18 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     ip_address: 10.255.1.207/31
+  Ethernet4:
+    peer: HOSTA
+    peer_interface: Eth2
+    peer_type: server
+    description: HOSTA_Eth2
+    type: switched
+    shutdown: false
+    mode: access
+    vlans: '112'
+    channel_group:
+      id: 4
+      mode: active
 mlag_configuration:
   domain_id: LeafPair1
   local_interface: Vlan4094
@@ -309,6 +348,8 @@ vxlan_interface:
           vni: 10010
         20:
           vni: 10020
+        112:
+          vni: 10112
       vrfs:
         A:
           vni: 50001

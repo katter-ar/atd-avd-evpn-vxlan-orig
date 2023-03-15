@@ -146,6 +146,20 @@ router_bgp:
       rd_evpn_domain:
         domain: remote
         rd: 10.1.0.102:10020
+    112:
+      tenant: ATD_DC
+      rd: 10.1.0.102:10112
+      route_targets:
+        both:
+        - 10112:10112
+        import_export_evpn_domains:
+        - domain: remote
+          route_target: 10112:10112
+      redistribute_routes:
+      - learned
+      rd_evpn_domain:
+        domain: remote
+        rd: 10.1.0.102:10112
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0
@@ -205,6 +219,9 @@ vlans:
   20:
     tenant: ATD_DC
     name: twenty
+  112:
+    tenant: ATD_DC
+    name: onetwelve
   4001:
     tenant: ATD_DC
     name: MLAG_iBGP_A
@@ -239,6 +256,15 @@ vlan_interfaces:
     shutdown: false
     mtu: 9014
     ip_address_virtual: 10.20.20.1/24
+    vrf: A
+  Vlan112:
+    tenant: ATD_DC
+    tags:
+    - DC
+    description: onetwelve
+    shutdown: false
+    mtu: 9014
+    ip_address_virtual: 10.111.112.1/24
     vrf: A
   Vlan4001:
     tenant: ATD_DC
@@ -372,6 +398,8 @@ vxlan_interface:
           vni: 10010
         20:
           vni: 10020
+        112:
+          vni: 10112
       vrfs:
         A:
           vni: 50001

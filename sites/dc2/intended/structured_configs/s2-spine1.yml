@@ -41,6 +41,14 @@ router_bgp:
       peer_group: IPV4-UNDERLAY-PEERS
       remote_as: '65101'
       description: s2-leaf2_Ethernet2
+    10.255.1.213:
+      peer_group: IPV4-UNDERLAY-PEERS
+      remote_as: '65102'
+      description: s2-leaf3_Ethernet2
+    10.255.1.221:
+      peer_group: IPV4-UNDERLAY-PEERS
+      remote_as: '65102'
+      description: s2-leaf4_Ethernet2
     10.255.1.149:
       peer_group: IPV4-UNDERLAY-PEERS
       remote_as: '65199'
@@ -65,6 +73,14 @@ router_bgp:
       peer_group: EVPN-OVERLAY-LOCAL-PEERS
       description: s2-leaf2
       remote_as: '65101'
+    10.1.0.118:
+      peer_group: EVPN-OVERLAY-LOCAL-PEERS
+      description: s2-leaf3
+      remote_as: '65102'
+    10.1.0.120:
+      peer_group: EVPN-OVERLAY-LOCAL-PEERS
+      description: s2-leaf4
+      remote_as: '65102'
   address_family_evpn:
     peer_groups:
       EVPN-OVERLAY-LOCAL-PEERS:
@@ -121,6 +137,24 @@ ethernet_interfaces:
     mtu: 9214
     type: routed
     ip_address: 10.255.1.204/31
+  Ethernet4:
+    peer: s2-leaf3
+    peer_interface: Ethernet2
+    peer_type: l3leaf
+    description: P2P_LINK_TO_S2-LEAF3_Ethernet2
+    shutdown: false
+    mtu: 9214
+    type: routed
+    ip_address: 10.255.1.212/31
+  Ethernet5:
+    peer: s2-leaf4
+    peer_interface: Ethernet2
+    peer_type: l3leaf
+    description: P2P_LINK_TO_S2-LEAF4_Ethernet2
+    shutdown: false
+    mtu: 9214
+    type: routed
+    ip_address: 10.255.1.220/31
   Ethernet7:
     peer: s2-brdr1
     peer_interface: Ethernet2

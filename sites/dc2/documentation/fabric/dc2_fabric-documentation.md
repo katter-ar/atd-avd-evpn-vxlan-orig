@@ -21,6 +21,8 @@
 | dc2_fabric | l3leaf | s2-brdr2 | 192.168.0.201/24 | ceos | Provisioned |
 | dc2_fabric | l3leaf | s2-leaf1 | 192.168.0.22/24 | ceos | Provisioned |
 | dc2_fabric | l3leaf | s2-leaf2 | 192.168.0.23/24 | ceos | Provisioned |
+| dc2_fabric | l3leaf | s2-leaf3 | 192.168.0.24/24 | ceos | Provisioned |
+| dc2_fabric | l3leaf | s2-leaf4 | 192.168.0.25/24 | ceos | Provisioned |
 | dc2_fabric | spine | s2-spine1 | 192.168.0.20/24 | ceos | Provisioned |
 | dc2_fabric | spine | s2-spine2 | 192.168.0.21/24 | ceos | Provisioned |
 
@@ -46,6 +48,12 @@
 | l3leaf | s2-leaf1 | Ethernet6 | mlag_peer | s2-leaf2 | Ethernet6 |
 | l3leaf | s2-leaf2 | Ethernet2 | spine | s2-spine1 | Ethernet3 |
 | l3leaf | s2-leaf2 | Ethernet3 | spine | s2-spine2 | Ethernet3 |
+| l3leaf | s2-leaf3 | Ethernet1 | mlag_peer | s2-leaf4 | Ethernet1 |
+| l3leaf | s2-leaf3 | Ethernet2 | spine | s2-spine1 | Ethernet4 |
+| l3leaf | s2-leaf3 | Ethernet3 | spine | s2-spine2 | Ethernet4 |
+| l3leaf | s2-leaf3 | Ethernet6 | mlag_peer | s2-leaf4 | Ethernet6 |
+| l3leaf | s2-leaf4 | Ethernet2 | spine | s2-spine1 | Ethernet5 |
+| l3leaf | s2-leaf4 | Ethernet3 | spine | s2-spine2 | Ethernet5 |
 
 # Fabric IP Allocation
 
@@ -53,7 +61,7 @@
 
 | Uplink IPv4 Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ---------------- | ------------------- | ------------------ | ------------------ |
-| 10.255.0.0/22 | 1024 | 16 | 1.57 % |
+| 10.255.0.0/22 | 1024 | 24 | 2.35 % |
 
 ## Point-To-Point Links Node Allocation
 
@@ -67,12 +75,16 @@
 | s2-leaf1 | Ethernet3 | 10.255.1.199/31 | s2-spine2 | Ethernet2 | 10.255.1.198/31 |
 | s2-leaf2 | Ethernet2 | 10.255.1.205/31 | s2-spine1 | Ethernet3 | 10.255.1.204/31 |
 | s2-leaf2 | Ethernet3 | 10.255.1.207/31 | s2-spine2 | Ethernet3 | 10.255.1.206/31 |
+| s2-leaf3 | Ethernet2 | 10.255.1.213/31 | s2-spine1 | Ethernet4 | 10.255.1.212/31 |
+| s2-leaf3 | Ethernet3 | 10.255.1.215/31 | s2-spine2 | Ethernet4 | 10.255.1.214/31 |
+| s2-leaf4 | Ethernet2 | 10.255.1.221/31 | s2-spine1 | Ethernet5 | 10.255.1.220/31 |
+| s2-leaf4 | Ethernet3 | 10.255.1.223/31 | s2-spine2 | Ethernet5 | 10.255.1.222/31 |
 
 ## Loopback Interfaces (BGP EVPN Peering)
 
 | Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | ------------- | ------------------- | ------------------ | ------------------ |
-| 10.1.0.0/24 | 256 | 6 | 2.35 % |
+| 10.1.0.0/24 | 256 | 8 | 3.13 % |
 
 ## Loopback0 Interfaces Node Allocation
 
@@ -82,6 +94,8 @@
 | dc2_fabric | s2-brdr2 | 10.1.0.104/32 |
 | dc2_fabric | s2-leaf1 | 10.1.0.114/32 |
 | dc2_fabric | s2-leaf2 | 10.1.0.116/32 |
+| dc2_fabric | s2-leaf3 | 10.1.0.118/32 |
+| dc2_fabric | s2-leaf4 | 10.1.0.120/32 |
 | dc2_fabric | s2-spine1 | 10.1.0.110/32 |
 | dc2_fabric | s2-spine2 | 10.1.0.112/32 |
 
@@ -89,7 +103,7 @@
 
 | VTEP Loopback Pool | Available Addresses | Assigned addresses | Assigned Address % |
 | --------------------- | ------------------- | ------------------ | ------------------ |
-| 10.1.1.0/24 | 256 | 4 | 1.57 % |
+| 10.1.1.0/24 | 256 | 6 | 2.35 % |
 
 ## VTEP Loopback Node allocation
 
@@ -99,3 +113,5 @@
 | dc2_fabric | s2-brdr2 | 10.1.1.102/32 |
 | dc2_fabric | s2-leaf1 | 10.1.1.114/32 |
 | dc2_fabric | s2-leaf2 | 10.1.1.114/32 |
+| dc2_fabric | s2-leaf3 | 10.1.1.118/32 |
+| dc2_fabric | s2-leaf4 | 10.1.1.118/32 |
