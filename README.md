@@ -81,10 +81,6 @@ pip3 config set global.disable-pip-version-check true
 pip3 install -r ${ARISTA_AVD_DIR}/arista/avd/requirements.txt
 ```
 
-## STEP #3 - Update Password in global_vars
-
-Update ansible_password: in global_vars/global_dc_vars.yml (line 5).
-
 ## Building/Deploying Configurations & Labs Info
 
 This AVD topology includes two labs, with tasks that show Day 2 operations using AVD on an EVPN VXLAN fabric.  These labs are located in the **lab guide** directory, in the file `evpn-vxlan-labs.md`.  You can view these labs in the easily readable MarkDown format within the IDE by right clicking the lab file, and clicking **Open Preview**.  You can also view them natively in github.
