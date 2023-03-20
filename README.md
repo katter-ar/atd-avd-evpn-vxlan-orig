@@ -68,17 +68,17 @@ Change working directory and clone repository by issuing the following commands.
 ``` bash
 cd /home/coder/project/labfiles
 git clone https://github.com/katter-ar/atd-avd-evpn-vxlan.git
-export LABPASSPHRASE=`cat /home/coder/.config/code-server/config.yaml| grep "password:" | awk '{print $2}'`
 cd atd-avd-evpn-vxlan
 ```
 
-## STEP #2 - Install the AVD collection
+## STEP #2 - Install the AVD collection - This step is required each time the lab topology is started or restarted
 
 ``` bash
 ansible-galaxy collection install arista.avd arista.cvp --force
 export ARISTA_AVD_DIR=$(ansible-galaxy collection list arista.avd --format yaml | head -1 | cut -d: -f1)
 pip3 config set global.disable-pip-version-check true
 pip3 install -r ${ARISTA_AVD_DIR}/arista/avd/requirements.txt
+export LABPASSPHRASE=`cat /home/coder/.config/code-server/config.yaml| grep "password:" | awk '{print $2}'`
 ```
 
 ## Building/Deploying Configurations & Labs Info
