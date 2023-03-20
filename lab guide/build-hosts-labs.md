@@ -2,9 +2,9 @@
 
 The goal of these labs are to show how AVD eases Day 2 and beyond network operations. 
 
-## Lab 1 - Add VLANs to EVPN VXLAN Topology
+## Lab Build Host Connectivity
 
-This lab will show you how simple it is to automate the configuration changes associated with adding additional VLANs and/or VRFs to your EVPN VXLAN topology.  In a non-automated EVPN VXLAN topology, anytime a new VLAN needs to be added and extended, it has to be created on every switch, added to VXLAN, and added to the BGP configuration on the relevant devices.  During this lab, you will modify the `dc1_fabric_services.yml` and `dc2_fabric_services.yml` vars files to add the new VLANs listed below.  
+This lab will show you how to build the host connectivity in both data centers. Once the connectivity is established, the EVPN VXLAN Labs will build the VLANs and VRFs that the hosts will be associated to.  During this lab, you will modify the `dc1_fabric_ports.yml` and `dc2_fabric_ports.yml` vars files to add the new VLANs listed below.  
 
 Modify the ***fabric_services*** vars files to add the VLAN 112 for host1 connectivity:
 
