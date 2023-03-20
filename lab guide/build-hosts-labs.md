@@ -6,7 +6,7 @@ The goal of these labs are to show how AVD eases Day 2 and beyond network operat
 
 This lab will show you how to build the host connectivity in both data centers. Once the connectivity is established, the EVPN VXLAN Labs will build the VLANs and VRFs that the hosts will be associated to.  During this lab, you will modify the `dc1_fabric_ports.yml` and `dc2_fabric_ports.yml` vars files to add the new VLANs listed below.  
 
-Modify the ***fabric_services*** vars files to add the VLAN 112 for host1 connectivity:
+Modify the ***fabric_ports*** vars files to add the host connectivity for each leaf pair (when updating DC2, change the switches to DC2 leaf names):
 
 ```yaml
  PP-SERVER-112:
