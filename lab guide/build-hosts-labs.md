@@ -15,9 +15,6 @@ Modify the ***fabric_services*** vars files to add the VLAN 112 for host1 connec
  PP-SERVER-134:
    mode: access
    vlans: "134"
- PP-FIREWALL:
-   mode: trunk
-   vlans: "10,20,30"
 
 servers:
  HOSTA:
