@@ -9,16 +9,33 @@ This lab will show you how to build the host connectivity in both data centers. 
 Modify the ***fabric_services*** vars files to add the VLAN 112 for host1 connectivity:
 
 ```yaml
+ PP-SERVER-112:
+   mode: access
+   vlans: "112"
+ PP-SERVER-134:
+   mode: access
+   vlans: "134"
+ PP-FIREWALL:
+   mode: trunk
+   vlans: "10,20,30"
 
-          112:
-            name: onetwelve
-            description: onetwelve
-            tags: ['DC']
-            enabled: true
-            mtu: 9014
-            ip_address_virtual: 10.111.112.1/24
-            evpn_l2_multi_domain: true
-
+servers:
+ HOSTA:
+   adapters:
+     - endpoint_ports: [Eth1, Eth2]
+       switch_ports: [Ethernet4, Ethernet4]
+       switches: [s1-leaf1, s1-leaf2]
+       profile: PP-SERVER-112
+       port_channel:
+         mode: active
+ HOSTB:
+   adapters:
+     - endpoint_ports: [Eth1, Eth2]
+       switch_ports: [Ethernet4, Ethernet4]
+       switches: [s1-leaf3, s1-leaf4]
+       profile: PP-SERVER-134
+       port_channel:
+         mode: active  
 ```
 
 After modifying and saving the vars files, complete the following steps:

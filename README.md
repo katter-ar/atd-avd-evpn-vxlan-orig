@@ -67,7 +67,13 @@ Change working directory and clone repository by issuing the following commands.
 
 ``` bash
 cd /home/coder/project/labfiles
+```
+
+``` bash
 git clone #<url># ####### Paste Your Forked Repository
+```
+
+``` bash
 cd atd-avd-evpn-vxlan
 ```
 
