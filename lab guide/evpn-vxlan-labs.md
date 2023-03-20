@@ -95,8 +95,8 @@ For dc1, you will modify:  `sites/dc1/inventory.yml`
 Add the following switches into the correct location in the file:
 
 ```yaml
-s1-Leaf3
-s1-Leaf4
+            s1-leaf3:
+            s1-leaf4:
 ```
 
 For dc2, you will modify:  `sites/dc2/inventory.yml`
@@ -104,8 +104,8 @@ For dc2, you will modify:  `sites/dc2/inventory.yml`
 Add the following switches into the correct location in the file:
 
 ```yaml
-s2-Leaf3
-s2-Leaf4
+            s2-leaf3:
+            s2-leaf4:
 ```
 
 2) To enable AVD to generate all the required configuration changes, you will only need to modify the `*_fabric.yml` files for each datacenter.  Follow the  YAML file structure for the existing leaf pairs, 1 and 2, and enter the required changes using the parameters below:
@@ -115,18 +115,20 @@ s2-Leaf4
 Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
 
 ```yaml
-group: LeafPair2
-bgp_as: 65002
-
-s1-Leaf3
-    id: 18
-    mgmt_ip: 192.168.0.14
-    uplink_switch_interfaces: Ethernet4, Ethernet4
-
-s1-Leaf4
-    id: 20
-    mgmt_ip: 192.168.0.15
-    uplink_switch_interfaces: Ethernet5, Ethernet5
+    - group: LeafPair2
+      filter:
+        tenants: [ATD_DC]
+        tags: ['DC']
+      bgp_as: 65002
+      nodes:
+        - name: s1-leaf3
+          id: 18
+          mgmt_ip: 192.168.0.14/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+        - name: s1-leaf4
+          id: 20
+          mgmt_ip: 192.168.0.15/24
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
 ```
 
     2) For dc2, you will modify:  `sites/dc2/group_vars/dc2_fabric.yml`
@@ -134,18 +136,20 @@ s1-Leaf4
 Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
 
 ```yaml
-group: LeafPair2
-bgp_as: 65102
-
-s2-Leaf3
-    id: 118
-    mgmt_ip: 192.168.0.24
-    uplink_switch_interfaces: Ethernet4, Ethernet4
-
-s2-Leaf4
-    id: 120
-    mgmt_ip: 192.168.0.25
-    uplink_switch_interfaces: Ethernet5, Ethernet5
+    - group: LeafPair2
+      filter:
+        tenants: [ATD_DC]
+        tags: ['DC']
+      bgp_as: 65102
+      nodes:
+        - name: s2-leaf3
+          id: 118
+          mgmt_ip: 192.168.0.24/24
+          uplink_switch_interfaces: [Ethernet4, Ethernet4]
+        - name: s2-leaf4
+          id: 120
+          mgmt_ip: 192.168.0.25/24
+          uplink_switch_interfaces: [Ethernet5, Ethernet5]
 ```
 
 After modifying and saving the vars files, complete the following steps:
