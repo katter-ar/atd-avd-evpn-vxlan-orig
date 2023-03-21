@@ -33,7 +33,6 @@ Since this topology is for two datacenters, the vars and inventory directories a
     |   |   |---dc1_fabric_ports.yml
     |   |   |---dc1_fabric_services.yml
     |   |   |---dc1_fabric.yml
-    |   |   |---dc1_hosts.yml
     |   |   |---dc1_leafs.yml
     |   |   |---dc1_spines.yml
     |   |   |---dc1.yml
@@ -46,7 +45,6 @@ Since this topology is for two datacenters, the vars and inventory directories a
     |   |   |---dc2_fabric_ports.yml
     |   |   |---dc2_fabric_services.yml
     |   |   |---dc2_fabric.yml
-    |   |   |---dc2_hosts.yml
     |   |   |---dc2_leafs.yml
     |   |   |---dc2_spines.yml
     |   |   |---dc2.yml
