@@ -53,7 +53,7 @@ After modifying and saving the vars files, we need to jump into CVP to apply som
 
 ## Lab 2 - Add VLANs to EVPN VXLAN Topology
 
-This lab will show you how simple it is to automate the configuration changes associated with adding additional VLANs and/or VRFs to your EVPN VXLAN topology.  In a non-automated EVPN VXLAN topology, anytime a new VLAN needs to be added and extended, it has to be created on every switch, added to VXLAN, and added to the BGP configuration on the relevant devices.  During this lab, you will modify the `dc1_fabric_services.yml` and `dc2_fabric_services.yml` vars files to add the new VLANs listed below.  
+This lab will show you how simple it is to automate the configuration changes associated with adding VLANs to your EVPN VXLAN topology.  In a non-automated EVPN VXLAN topology, anytime a new VLAN needs to be added and extended, it has to be created on every switch, added to VXLAN, and added to the BGP configuration on the relevant devices.  During this lab, you will modify the `dc1_fabric_services.yml` and `dc2_fabric_services.yml` vars files to add the new VLANs listed below.  
 
 Modify the ***fabric_services*** vars files to add the VLAN 112 for host1 connectivity:
 
@@ -84,7 +84,7 @@ After modifying and saving the vars files, complete the following steps:
 
 7) Validate that s1-host1 can ping s2-host2
 
-## Lab 2 - Add Leaf Pairs 3 and 4
+## Lab 3 - Add Leaf Pairs 3 and 4
 
 This lab will show you the simplicity in adding additional leaf pairs to your existing Layer 3 leaf/spines topology.  In a non-automated topology, when deploying new leafs, you would need to duplicate or create the base configs for the new leafs, and then modify the configurations of the existing devices to add them into the EVPN VXLAN overlay.  For this lab, you will be adding leafs 3 and 4 in each datacenter into the network topology by following the below steps.
 
@@ -146,6 +146,27 @@ s2-Leaf4
     id: 120
     mgmt_ip: 192.168.0.25
     uplink_switch_interfaces: Ethernet5, Ethernet5
+```
+## Lab 4 - Add VRFs and VLANs to EVPN VXLAN Topology
+
+This lab will show you how simple it is to automate the configuration changes associated with adding additional VRFs to your EVPN VXLAN topology.  In a non-automated EVPN VXLAN topology, anytime a new VRF needs to be added and extended, it has to be created on every switch, added to VXLAN, and added to the BGP configuration on the relevant devices.  During this lab, you will modify the `dc1_fabric_services.yml` and `dc2_fabric_services.yml` vars files to add the new VRFs and associated VLANs listed below.  
+
+Modify the ***fabric_services*** vars files to add the VRF B and VLAN 134 for host2 connectivity:
+
+```yaml
+      B:
+        vrf_vni: 50002
+        mlag_ibgp_peering_vlan: 4002
+        mlag_ibgp_peering_ipv4_pool: 192.3.2.0/23
+        svis:
+          134:
+            name: onethirtyfour
+            description: onethirtyfour
+            tags: ['DC']
+            enabled: true
+            mtu: 9014
+            ip_address_virtual: 10.111.134.1/24
+            evpn_l2_multi_domain: true
 ```
 
 After modifying and saving the vars files, complete the following steps:
