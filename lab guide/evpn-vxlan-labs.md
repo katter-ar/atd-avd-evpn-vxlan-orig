@@ -82,7 +82,7 @@ After modifying and saving the vars files, complete the following steps:
 
 6) Validate that s1-host1 and s2-host1 can ping 10.111.112.1 (s1-host2 and s2-host2 will be validated once their leaf pairs are created)
 
-7) Validate that s1-host1 can ping s2-host2
+7) Validate that s1-host1 can ping s2-host1
 
 ## Lab 3 - Add Leaf Pairs 3 and 4
 
@@ -183,4 +183,9 @@ After modifying and saving the vars files, complete the following steps:
 
 4) Issue the `make deploy-dc1` and `make deploy-dc2`, review the created change controls in CVP, and approve.
 
-5) Login to leaf switches 3 and 4 and verify the new configurations are present.
+5) Login to leaf switches 3 and 4 and verify the new configurations are present. It might be necessary to perform a shut/no shut on interfaces ethernet 2 & 3 for s1-leaf3&4 and s2-leaf3&4.
+
+6) Validate that s1-host2 and s2-host2 can ping 10.111.112.1
+
+7) Validate that s1-host2 can ping s2-host2
+
