@@ -4,9 +4,11 @@ The goal of these labs are to show how AVD eases Day 2 and beyond network operat
 
 ## Lab 1 - Build Host Connectivity
 
-This lab will show you how to build the host connectivity in both data centers. Once the connectivity is established, the remaining labs will build the VLANs and VRFs that the hosts will be associated to.  During this lab, you will modify the `dc1_fabric_ports.yml` and `dc2_fabric_ports.yml` vars files to add the new VLANs listed below.  
+This lab will show you how to build the host connectivity in both data centers. Once the connectivity is established, the remaining labs will build the VLANs and VRFs that the hosts will be associated to.  During this lab, you will modify the `dc1_fabric_ports.yml` and `dc2_fabric_ports.yml` vars files to add the new host connectivity into the fabric.  
 
-Modify the ***fabric_ports*** vars files to add the VLAN 112 for host1 connectivity:
+Modify the ***fabric_ports*** vars files to add the host connectivity in.
+
+For dc1, you will modify: `dc1_fabric_ports.yml`
 
 ```yaml
  PP-SERVER-112:
@@ -35,11 +37,42 @@ servers:
          mode: active  
 ```
 
+For dc2, you will modify: `dc2_fabric_ports.yml`
+
+```yaml
+ PP-SERVER-112:
+   mode: access
+   vlans: "112"
+ PP-SERVER-134:
+   mode: access
+   vlans: "134"
+
+servers:
+ HOSTA:
+   adapters:
+     - endpoint_ports: [Eth1, Eth2]
+       switch_ports: [Ethernet4, Ethernet4]
+       switches: [s2-leaf1, s2-leaf2]
+       profile: PP-SERVER-112
+       port_channel:
+         mode: active
+ HOSTB:
+   adapters:
+     - endpoint_ports: [Eth1, Eth2]
+       switch_ports: [Ethernet4, Ethernet4]
+       switches: [s2-leaf3, s2-leaf4]
+       profile: PP-SERVER-134
+       port_channel:
+         mode: active  
+```
+
 ## Lab 2 - Add VLANs to EVPN VXLAN Topology
 
 This lab will show you how simple it is to automate the configuration changes associated with adding VLANs to your EVPN VXLAN topology.  In a non-automated EVPN VXLAN topology, anytime a new VLAN needs to be added and extended, it has to be created on every switch, added to VXLAN, and added to the BGP configuration on the relevant devices.  During this lab, you will modify the `dc1_fabric_services.yml` and `dc2_fabric_services.yml` vars files to add the new VLANs listed below.  
 
-Modify the ***fabric_services*** vars files to add the VLAN 112 for host1 connectivity:
+Modify the ***fabric_services*** vars files to add the VLAN 112 for host1 connectivity.
+
+For both DCs, you will modify: `dc1_fabric_services.yml` and  `dc1=2_fabric_services.yml`
 
 ```yaml
           112:
@@ -60,7 +93,7 @@ After modifying and saving the vars files, complete the following steps:
 
 3) Review the changes to the documentation that is auto-created.
 
-4) Issue the `make deploy_dc1_cvp` and `make deploy_dc2_cvp`, review the created change controls in CVP, and approve.
+4) Issue the `make deploy_dc1_eapi` and `make deploy_dc2_eapi`
 
 5) Login to leaf switches 1 and 2 and verify the new configurations are present.
 
@@ -94,7 +127,7 @@ Add the following switches into the correct location in the file:
 
 2) To enable AVD to generate all the required configuration changes, you will only need to modify the `*_fabric.yml` files for each datacenter.  Follow the  YAML file structure for the existing leaf pairs, 1 and 2, and enter the required changes using the parameters below:
 
-    1) For dc1, you will modify:  `sites/dc1/group_vars/dc1_fabric.yml`
+For dc1, you will modify:  `sites/dc1/group_vars/dc1_fabric.yml`
 
 Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
 
@@ -115,7 +148,7 @@ Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
           uplink_switch_interfaces: [Ethernet5, Ethernet5]
 ```
 
-    2) For dc2, you will modify:  `sites/dc2/group_vars/dc2_fabric.yml`
+For dc2, you will modify:  `sites/dc2/group_vars/dc2_fabric.yml`
 
 Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
 
@@ -141,6 +174,8 @@ This lab will show you how simple it is to automate the configuration changes as
 
 Modify the ***fabric_services*** vars files to add the VRF B and VLAN 134 for host2 connectivity:
 
+For both DCs, you will modify: `dc1_fabric_services.yml` and  `dc1=2_fabric_services.yml`
+
 ```yaml
       B:
         vrf_vni: 50002
@@ -160,16 +195,12 @@ Modify the ***fabric_services*** vars files to add the VRF B and VLAN 134 for ho
 After modifying and saving the vars files, complete the following steps:
 
 1) Issue the `make build-dc1` and `make build-dc2` to generate the new structured and device configurations.
-
 2) Review the configurations in their respective directories and verify the changes are correct.  
-
 3) Review the changes to the documentation that is auto-created.
-
-4) Issue the `make deploy-dc1` and `make deploy-dc2`, review the created change controls in CVP, and approve.
-
+4) Issue the `make deploy_dc1_eapi` and `make deploy_dc2_eapi`
 5) Login to leaf switches 3 and 4 and verify the new configurations are present. It might be necessary to perform a shut/no shut on interfaces ethernet 2 & 3 for s1-leaf3&4 and s2-leaf3&4.
-
 6) Validate that s1-host2 and s2-host2 can ping 10.111.112.1
-
 7) Validate that s1-host2 can ping s2-host2
+8) Validate that s1-host1 CANNOT ping s1-host2
+9) Validate that s2-host1 CANNOT ping s2-host2
 
