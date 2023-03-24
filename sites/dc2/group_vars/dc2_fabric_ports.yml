@@ -23,27 +23,3 @@ port_profiles:
  PP-FIREWALL:
    mode: trunk
    vlans: "10,20,30"
- PP-SERVER-112:
-   mode: access
-   vlans: "112"
- PP-SERVER-134:
-   mode: access
-   vlans: "134"
-
-servers:
- HOSTA:
-   adapters:
-     - endpoint_ports: [Eth1, Eth2]
-       switch_ports: [Ethernet4, Ethernet4]
-       switches: [s2-leaf1, s2-leaf2]
-       profile: PP-SERVER-112
-       port_channel:
-         mode: active
- HOSTB:
-   adapters:
-     - endpoint_ports: [Eth1, Eth2]
-       switch_ports: [Ethernet4, Ethernet4]
-       switches: [s2-leaf3, s2-leaf4]
-       profile: PP-SERVER-134
-       port_channel:
-         mode: active  
