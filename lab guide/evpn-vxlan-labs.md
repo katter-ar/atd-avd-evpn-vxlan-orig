@@ -34,7 +34,8 @@ servers:
        switches: [s1-leaf3, s1-leaf4]
        profile: PP-SERVER-134
        port_channel:
-         mode: active  
+         mode: active
+
 ```
 
 For dc2, you will modify: `dc2_fabric_ports.yml`
@@ -64,6 +65,7 @@ servers:
        profile: PP-SERVER-134
        port_channel:
          mode: active  
+
 ```
 
 ## Lab 2 - Add VLANs to EVPN VXLAN Topology
@@ -83,6 +85,7 @@ For both DCs, you will modify: `dc1_fabric_services.yml` and  `dc1=2_fabric_serv
             mtu: 9014
             ip_address_virtual: 10.111.112.1/24
             evpn_l2_multi_domain: true
+
 ```
 
 After modifying and saving the vars files, complete the following steps:
@@ -146,6 +149,7 @@ Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
           id: 20
           mgmt_ip: 192.168.0.15/24
           uplink_switch_interfaces: [Ethernet5, Ethernet5]
+
 ```
 
 For dc2, you will modify:  `sites/dc2/group_vars/dc2_fabric.yml`
@@ -167,6 +171,7 @@ Use the following parameters for Leafs 3 and 4, which are leaf pair 2.
           id: 120
           mgmt_ip: 192.168.0.25/24
           uplink_switch_interfaces: [Ethernet5, Ethernet5]
+
 ```
 ## Lab 4 - Add VRFs and VLANs to EVPN VXLAN Topology
 
@@ -190,6 +195,7 @@ For both DCs, you will modify: `dc1_fabric_services.yml` and  `dc1=2_fabric_serv
             mtu: 9014
             ip_address_virtual: 10.111.134.1/24
             evpn_l2_multi_domain: true
+
 ```
 
 After modifying and saving the vars files, complete the following steps:
