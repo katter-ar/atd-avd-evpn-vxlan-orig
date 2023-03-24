@@ -103,7 +103,7 @@ After modifying and saving the vars files, complete the following steps:
 
 ## Lab 3 - Add Leaf Pairs 3 and 4
 
-This lab will show you the simplicity in adding additional leaf pairs to your existing Layer 3 leaf/spines topology.  In a non-automated topology, when deploying new leafs, you would need to duplicate or create the base configs for the new leafs, and then modify the configurations of the existing devices to add them into the EVPN VXLAN overlay.  For this lab, you will be adding leafs 3 and 4 in each datacenter into the network topology by following the below steps.
+This lab will show you the simplicity in adding additional leaf pairs to your existing Layer 3 leaf/spine topology.  In a non-automated topology, when deploying new leafs, you would need to duplicate or create the base configs for the new leafs, and then modify the configurations of the existing devices to add them into the EVPN VXLAN overlay.  For this lab, you will be adding leafs 3 and 4 in each datacenter into the network topology by following the below steps.
 
 1) The first step is to add the new leafs into their respective inventory files:
 
