@@ -35,22 +35,6 @@ servers:
          mode: active  
 ```
 
-After modifying and saving the vars files, we need to jump into CVP to apply some host configurations:
-
-1) Click on the Provisioning tab and then Network Provisioning.
-
-2) Right-click on the device "s1-host1" then click Manage - Configlet.
-
-3) Search the configlets for "s1-host1".
-
-4) Select the configlet named "VXLAN-DCI_s1-host1" then click Validate.
-
-5) Click the green Save button on the comparison screen and then again on the Network Provisioning screen.
-
-6) repeat for "s1-host2", "s2-host1" and "s2-host2" matching the device name with the search and configlet names.
-
-7) Add all of the newly created tasks to a Change Control and execute to apply the changes.
-
 ## Lab 2 - Add VLANs to EVPN VXLAN Topology
 
 This lab will show you how simple it is to automate the configuration changes associated with adding VLANs to your EVPN VXLAN topology.  In a non-automated EVPN VXLAN topology, anytime a new VLAN needs to be added and extended, it has to be created on every switch, added to VXLAN, and added to the BGP configuration on the relevant devices.  During this lab, you will modify the `dc1_fabric_services.yml` and `dc2_fabric_services.yml` vars files to add the new VLANs listed below.  

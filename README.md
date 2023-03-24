@@ -194,6 +194,7 @@ preplab: ## Deploy Configs via eAPI
 
 **Description:** This command deploys a few interface and BGP configuration changes to the s2-core1 and s2-core2 devices in datacenter2.  This is required to enable routing between the two datacenter fabrics.  This playbook uses the eos_config module to merge the config changes on the devices via their eAPI. This command also deploys the hosts in each datacenter fabric
 
+<br>
 
 ### Initial Configuration Build & Deployment
 
