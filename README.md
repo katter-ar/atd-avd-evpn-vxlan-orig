@@ -11,6 +11,16 @@ Since this topology is for two datacenters, the vars and inventory directories a
 
 ### Directory and File Structure
 ```bash
+|---extra_configs
+    |---inventory.yml
+    |---s1-core1.cfg
+    |---s1-core2.cfg
+    |---s1-host1.cfg
+    |---s1-host2.cfg
+    |---s2-core1.cfg
+    |---s2-core2.cfg
+    |---s2-host1.cfg
+    |---s2-host2.cfg
 |---global_vars
     |---global_dc_vars.yml
 |---lab guide
@@ -19,16 +29,12 @@ Since this topology is for two datacenters, the vars and inventory directories a
     |---build_dc1.yml
     |---build_dc2.yml
     |---deploy_dc1_cvp.yml
-    |---deploy_dc1_dci_eapi.yml
     |---deploy_dc1_eapi.yml
     |---deploy_dc2_cvp.yml
-    |---deploy_dc2_dci_eapi.yml
     |---deploy_dc2_eapi.yml
+    |---preplab.yml
 |---sites
     |---dc1 [Inventory and VARs for DC1 only]
-    |   |---dci_configs [Non AVD Configs for Topology]
-    |   |   |---s1-core1.cfg
-    |   |   |---s1-core2.cfg
     |   |---groups_vars
     |   |   |---dc1_fabric_ports.yml
     |   |   |---dc1_fabric_services.yml
@@ -38,9 +44,6 @@ Since this topology is for two datacenters, the vars and inventory directories a
     |   |   |---dc1.yml
     |   |---inventory.yml
     |---dc2 [Inventory and VARs for DC2 only]
-    |   |---dci_configs [Non AVD Configs for Topology]
-    |   |   |---s2-core1.cfg
-    |   |   |---s2-core2.cfg
     |   |---groups_vars
     |   |   |---dc2_fabric_ports.yml
     |   |   |---dc2_fabric_services.yml
@@ -93,6 +96,7 @@ The deployment of the fabric, both initially, and after any changes, is all perf
 
 Below is a description of all the available make file commands, what their purpose is, as well as which ansible playbook and inventory file they control.  
 
+<br>
 
 **Command:**  `make build_dc1`
 
@@ -106,6 +110,7 @@ build_dc1: ## Build AVD Configs for DC1
 
 **Description:** This command invokes AVD to build the device configurations for all devices in datacenter1.  The playbook ingests the global_vars file variables, as well as everything defined in the various yml files in the group_vars directory for site/dc1.  It then creates the `intended/configs`, `intended/structured_configs`, and `documentation` directories under the `site1` directory.  Finally, it generates the all device configs, structured configs, and markdown documentation files.
 
+<br>
 
 **Command:**  `make build_dc2`
 
@@ -119,6 +124,7 @@ build_dc2: ## Build AVD Configs for DC2
 
 **Description:** This command invokes AVD to build the device configurations for all devices in datacenter2.  The playbook ingests the global_vars file variables, as well as everything defined in the various yml files in the group_vars directory for site/dc2.  It then creates the `intended/configs`, `intended/structured_configs`, and `documentation` directories under the `site2` directory.  Finally, it generates the all device configs, structured configs, and markdown documentation files.
 
+<br>
 
 **Command:**  `make deploy_dc1_cvp`
 
@@ -132,6 +138,7 @@ deploy_dc1_cvp: ## Deploy DC1 AVD Configs Through CVP
 
 **Description:** This command invokes AVD to deploy the created configurations, and make the necessary container changes in CVP.  The playbook calls the deploy_cvp role, modifying the CVP container structure if necessary, uploading the created configuration to CVP as configlets, and deploying those configlets to the relevant devices in datacenter1.  The playbook also has a flag called `execute_tasks: true`, which tells CVP to automatically create a change control for the created tasts, and execute them without user intervention.
 
+<br>
 
 **Command:**  `make deploy_dc2_cvp`
 
@@ -145,6 +152,7 @@ deploy_dc1_cvp: ## Deploy DC2 AVD Configs Through CVP
 
 **Description:** This command invokes AVD to deploy the created configurations, and make the necessary container changes in CVP.  The playbook calls the deploy_cvp role, modifying the CVP container structure if necessary, uploading the created configuration to CVP as configlets, and deploying those configlets to the relevant devices in datacenter2.  The playbook also has a flag called `execute_tasks: true`, which tells CVP to automatically create a change control for the created tasts, and execute them without user intervention.
 
+<br>
 
 **Command:**  `make deploy_dc1_eapi`
 
@@ -158,6 +166,7 @@ deploy_dc1_eapi: ## Deploy DC1 Spine/Leaf AVD generated configs via eAPI
 
 **Description:** This command invokes the eos_config module to deploy the created configurations only on applicable devices in datacenter1, bypassing CVP and using the device eAPIs.  This playbook show an alternative way to use automation and AVD, without CVP for managing configurations.
 
+<br>
 
 **Command:**  `make deploy_dc2_eapi`
 
@@ -171,6 +180,7 @@ deploy_dc1_eapi: ## Deploy DC2 Spine/Leaf AVD generated configs via eAPI
 
 **Description:** This command invokes the eos_config module to deploy the created configurations only on applicable devices in datacenter2, bypassing CVP and using the device eAPIs.  This playbook show an alternative way to use automation and AVD, without CVP for managing configurations.
 
+<br>
 
 **Command:**  `make preplab`
 
@@ -189,13 +199,5 @@ preplab: ## Deploy Configs via eAPI
 
 Follow the below steps of which make commands to run to build the initial fabric using AVD.
 
-1) Deploy dc1 DCI configs:  `make deploy_dc1_dci`
-2) Deploy dc2 DCI configs:  `make deploy_dc2_dci`
-3) Build dc1 configs:  `make build_dc1`
-4) Build dc2 configs:  `make build_dc2`
-5) Deploy dc1 configs via CVP:  `make deploy_dc1_cvp`
-    1) login to cvp and watch the tasks and change control screens to see the tasks auto-created and executed.
-6) Deploy dc2 configs via CVP:  `make deploy_dc2_cvp`
-    1) login to cvp and watch the tasks and change control screens to see the tasks auto-created and executed.
-7) Login to switch CLIs and verify configs and operation.
-8) Continue on with labs in the `lab guide` directory.
+1) Deploy Lab Prep Configs:  `make preplab`
+2) Continue on with labs in the `lab guide` directory.
